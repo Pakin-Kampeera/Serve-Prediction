@@ -11,22 +11,25 @@ app = FastAPI()
 class Series(BaseModel):
     series: list
 
-output_word_model = open('artifacts\word_model.pkl', 'rb')
+output_word_model = open('artifacts/word_model.pkl', 'rb')
 word_model = pickle.load(output_word_model)
 
 # output_word_vectorizer = open('artifacts\word_vectorizer.pkl', 'rb')
 # word_vectorizer = pickle.load(output_word_vectorizer)
 
-output_word_embedding_rf = open('artifacts\word_embedding_rf.pkl', 'rb')
+output_word_embedding_rf = open('artifacts/word_embedding_rf.pkl', 'rb')
 word_embedding_rf = pickle.load(output_word_embedding_rf)
+
+output_word_embedding_lr = open('artifacts/word_embedding_lr.pkl', 'rb')
+word_embedding_lg = pickle.load(output_word_embedding_lr)
 
 
 @app.post('/prediction')
 def Stress_Prediction(series: Series):
     print(series.series)
     input_matrix = Text_Processes(pd.Series(series.series))
-    pred_labels = word_embedding_rf.predict(input_matrix)
-    pred_proba = word_embedding_rf.predict_proba(input_matrix)
+    pred_labels = word_embedding_lg.predict(input_matrix)
+    pred_proba = word_embedding_lg.predict_proba(input_matrix)
     confidence_score = [prob[1] for prob in pred_proba]
     output = pd.DataFrame(
         {'text': series.series, 'confidence_score': confidence_score, 'labels': pred_labels})
