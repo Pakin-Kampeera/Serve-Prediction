@@ -17,5 +17,5 @@ conda activate fastapi_pred
 ## Start
 
 ```
-uvicorn server:app --reload
+python server.py
 ```

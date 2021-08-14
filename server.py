@@ -12,6 +12,7 @@ app = FastAPI()
 class Series(BaseModel):
     series: list
 
+
 output_word_model = open('artifacts\word_model.pkl', 'rb')
 word_model = pickle.load(output_word_model)
 
