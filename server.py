@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
+import uvicorn
 import pandas as pd
 import pickle
 from script.word_embedding_vectorizer import WordEmbeddingVectorizer
@@ -11,6 +12,7 @@ app = FastAPI()
 class Series(BaseModel):
     series: list
 
+
 output_word_model = open('artifacts\word_model.pkl', 'rb')
 word_model = pickle.load(output_word_model)
 
@@ -21,7 +23,7 @@ output_word_embedding_rf = open('artifacts\word_embedding_rf.pkl', 'rb')
 word_embedding_rf = pickle.load(output_word_embedding_rf)
 
 
-@app.post('/prediction')
+@app.post('/prediction', tags=['Prediction'])
 def Stress_Prediction(series: Series):
     print(series.series)
     input_matrix = Text_Processes(pd.Series(series.series))
@@ -34,9 +36,12 @@ def Stress_Prediction(series: Series):
     return output
 
 
-@app.post('/processes')
 def Text_Processes(series):
     preprocess_series = Posts(series).preprocess()
     input_matrix = WordEmbeddingVectorizer(word_model).fit(
         preprocess_series).transform(preprocess_series)
     return input_matrix
+
+
+if __name__ == '__main__':
+    uvicorn.run('server:app', host='0.0.0.0', port=5000, reload=True)
