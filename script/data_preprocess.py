@@ -6,6 +6,7 @@ import nltk
 nltk.download("stopwords")
 nltk.download("wordnet")
 
+
 class Posts:
     def __init__(self, text_df):
         self.text_df = text_df

@@ -3,6 +3,7 @@ import logging
 from sklearn.feature_extraction.text import TfidfVectorizer
 from collections import defaultdict
 
+
 class WordEmbeddingVectorizer(object):
     def __init__(self, word_model):
         self.word_model = word_model

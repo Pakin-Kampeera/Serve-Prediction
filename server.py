@@ -6,7 +6,7 @@ import pickle
 from script.word_embedding_vectorizer import WordEmbeddingVectorizer
 from script.data_preprocess import Posts
 
-app = FastAPI()
+app = FastAPI(redoc_url=None)
 
 
 class Series(BaseModel):
@@ -23,10 +23,10 @@ output_word_embedding_rf = open('artifacts\word_embedding_rf.pkl', 'rb')
 word_embedding_rf = pickle.load(output_word_embedding_rf)
 
 
-@app.post('/prediction', tags=['Prediction'])
-def Stress_Prediction(series: Series):
+@ app.post('/prediction', tags=['Prediction'])
+async def Stress_Prediction(series: Series):
     print(series.series)
-    input_matrix = Text_Processes(pd.Series(series.series))
+    input_matrix = await Text_Processes(pd.Series(series.series))
     pred_labels = word_embedding_rf.predict(input_matrix)
     pred_proba = word_embedding_rf.predict_proba(input_matrix)
     confidence_score = [prob[1] for prob in pred_proba]
@@ -36,7 +36,7 @@ def Stress_Prediction(series: Series):
     return output
 
 
-def Text_Processes(series):
+async def Text_Processes(series):
     preprocess_series = Posts(series).preprocess()
     input_matrix = WordEmbeddingVectorizer(word_model).fit(
         preprocess_series).transform(preprocess_series)
@@ -44,4 +44,4 @@ def Text_Processes(series):
 
 
 if __name__ == '__main__':
-    uvicorn.run('server:app', host='0.0.0.0', port=5000, reload=True)
+    uvicorn.run('server:app', host='127.0.0.1', reload=True)

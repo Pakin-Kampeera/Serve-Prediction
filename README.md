@@ -19,3 +19,5 @@ conda activate fastapi_pred
 ```
 python server.py
 ```
+
+http://127.0.0.1:8000/docs
