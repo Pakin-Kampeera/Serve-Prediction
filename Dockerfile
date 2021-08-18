@@ -4,8 +4,12 @@ WORKDIR /app
 
 COPY . .
 
-RUN pip install fastapi uvicorn
+RUN python3 -m venv serve_pred
+
+RUN source serve_pred/bin/activate
+
+RUN pip install -r requirements.txt
 
 EXPOSE 80
 
-CMD [ "uvicorn", "server:app", "--port", "80"]
+CMD [ "python", "server.py"]

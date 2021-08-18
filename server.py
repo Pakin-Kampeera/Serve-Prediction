@@ -13,13 +13,13 @@ class Series(BaseModel):
     series: list
 
 
-output_word_model = open('artifacts\word_model.pkl', 'rb')
+output_word_model = open('artifacts/word_model.pkl', 'rb')
 word_model = pickle.load(output_word_model)
 
 # output_word_vectorizer = open('artifacts\word_vectorizer.pkl', 'rb')
 # word_vectorizer = pickle.load(output_word_vectorizer)
 
-output_word_embedding_rf = open('artifacts\word_embedding_rf.pkl', 'rb')
+output_word_embedding_rf = open('artifacts/word_embedding_rf.pkl', 'rb')
 word_embedding_rf = pickle.load(output_word_embedding_rf)
 
 
