@@ -1,5 +1,4 @@
 import numpy as np
-import logging
 from sklearn.feature_extraction.text import TfidfVectorizer
 from collections import defaultdict
 
@@ -16,7 +15,11 @@ class WordEmbeddingVectorizer(object):
             text_docs.append(" ".join(text))
 
         tfidf = TfidfVectorizer(stop_words='english', ngram_range=(1, 1))
-        tfidf.fit(text_docs)
+        try:
+            tfidf.fit(text_docs)
+        except:
+            print('Only contain stop word')
+            return self
         max_idf = max(tfidf.idf_)
         self.word_idf_weight = defaultdict(lambda: max_idf,
                                            [(word, tfidf.idf_[i]) for word, i in tfidf.vocabulary_.items()])
@@ -30,12 +33,15 @@ class WordEmbeddingVectorizer(object):
         mean = []
         for word in sent:
             if word in self.word_model.wv.vocab:
+                # print(self.word_model.wv.get_vector(
+                #     word) * self.word_idf_weight[word])
                 mean.append(self.word_model.wv.get_vector(
                     word) * self.word_idf_weight[word])
-
+        print('mean work')
+        # print(mean)
         if not mean:
-            logging.warning(
-                "cannot compute average owing to no vector for {}".format(sent))
+            # logging.warning(
+            #     "cannot compute average owing to no vector for {}".format(sent))
             return np.zeros(self.vector_size)
         else:
             mean = np.array(mean).mean(axis=0)

@@ -11,15 +11,7 @@
 
 ## Prerequisite
 
-- Git
 - Python3
-
-## Installation
-
-```
-git clone git@github.com:Pakin-Kampeera/Serve-Prediction.git
-cd serve-prediction
-```
 
 ## Enable Virtual Environment
 

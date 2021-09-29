@@ -2,14 +2,12 @@ FROM tiangolo/uvicorn-gunicorn:python3.8
 
 WORKDIR /app
 
-COPY . .
-
-RUN python3 -m venv serve_pred
-
-RUN source serve_pred/bin/activate
+COPY ./requirements.txt .
 
 RUN pip install -r requirements.txt
 
-EXPOSE 80
+COPY . .
+
+EXPOSE 8000
 
 CMD [ "python", "server.py"]
