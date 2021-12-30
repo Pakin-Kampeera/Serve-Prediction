@@ -2,12 +2,12 @@
 
 ## Prediction
 
-- Word2Vec + TF-IDF (Feature Extraction Model)
-- Logistic Regression (Classification Model)
+- Word2Vec + TF-IDF (Feature Extraction)
+- Logistic Regression (Classification)
 
 ## Technology
 
-- FastAPI (Restful framework)
+- FastAPI (RESTful framework)
 
 ## Prerequisite
 
@@ -37,6 +37,6 @@ pip install -r requirements.txt
 python server.py
 ```
 
-## Test API
+## API Doc
 
 http://127.0.0.1:8000/docs
